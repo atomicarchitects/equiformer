@@ -1,0 +1,64 @@
+includes:
+- oc20/configs/is2re/100k/base.yml
+
+
+model:
+  name: graph_attention_transformer
+  irreps_node_embedding: '256x0e+128x1e'
+  num_layers: 8
+  irreps_node_attr: '1x0e'
+  use_node_attr: False
+  irreps_sh: '1x0e+1x1e'
+  max_radius: 5.0
+  number_of_basis: 128
+  fc_neurons: [64, 64] 
+  use_atom_edge_attr: False
+  irreps_atom_edge_attr: '1x0e'
+  irreps_feature: '512x0e'
+  irreps_head: '32x0e+16x1e'
+  num_heads: 8
+  irreps_pre_attn: '256x0e+128x1e'
+  rescale_degree: False
+  nonlinear_message: False
+  irreps_mlp_mid: '768x0e+384x1e'
+  norm_layer: 'layer'
+  alpha_drop: 0.2
+  proj_drop: 0.0
+  out_drop: 0.0
+  drop_path_rate: 0.0
+  otf_graph: True
+  use_pbc: True
+  max_neighbors: 500
+  
+  
+optim:
+  batch_size: 16
+  eval_batch_size: 16
+  num_workers: 4
+  lr_initial: 0.0002
+  max_epochs: 20
+  optimizer: AdamW
+  optimizer_params:
+    weight_decay: 0.001
+  scheduler: LambdaLR
+  scheduler_params:
+    lambda_type: cosine
+    warmup_factor: 0.2
+    warmup_epochs: 2
+    lr_min_factor: 1.e-2
+
+  #scheduler: cosine
+  #scheduler_params: {'warmup_lr': 1.e-6, 'min_lr': 2.e-6, 'warmup_epochs': 1, 
+  #'decay_rate': 0.1, 'decay_epochs': 30, 'cooldown_epochs': 5, 'patience_epochs': 10}
+
+# For step learning rate scheduling
+#scheduler: multistep
+#  scheduler_params: {'warmup_lr': 4.e-5, 'warmup_epochs': 2, 
+#  'decay_rate': 0.1, 'decay_epochs': [5, 10, 15], 
+#  'cooldown_epochs': 5, 'patience_epochs': 10, 'min_lr': 2.e-6}
+  
+  
+# For cosine learning rate scheduling
+#  scheduler: cosine
+#  scheduler_params: {'warmup_lr': 1.e-6, 'min_lr': 2.e-6, 'warmup_epochs': 1, 
+#  'decay_rate': 0.1, 'decay_epochs': 30, 'cooldown_epochs': 5, 'patience_epochs': 10}

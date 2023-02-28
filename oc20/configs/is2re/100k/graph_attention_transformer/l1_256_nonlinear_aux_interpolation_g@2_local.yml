@@ -1,0 +1,85 @@
+# Difference from config without using interpolation between initial and relaxed positions:
+# 1. the L2 norm of delta pos is smaller.
+# 2. Use `use_interpolate_init_relaxed_pos`.
+
+
+trainer: energy_v2
+
+
+dataset:
+  - src: datasets/oc20/is2re/100k/train/data.lmdb
+    normalize_labels: True
+    target_mean: -1.525913953781128
+    target_std: 2.279365062713623
+    
+    normalize_positions: True
+    positions_mean: [0.0, 0.0, 0.0]
+    positions_std: [0.7329489588737488, 0.7329489588737488, 0.7329489588737488]
+  - src: datasets/oc20/is2re/all/val_id/data.lmdb
+
+
+logger: tensorboard
+
+
+hide_eval_progressbar: True
+
+
+task:
+  dataset: single_point_lmdb
+  description: "Relaxed state energy prediction from initial structure."
+  type: regression
+  metric: mae
+  labels:
+    - relaxed energy
+    
+
+model:
+  name: graph_attention_transformer
+  irreps_node_embedding: '256x0e+128x1e'
+  num_layers: 6
+  irreps_node_attr: '1x0e'
+  use_node_attr: False
+  irreps_sh: '1x0e+1x1e'
+  max_radius: 5.0
+  number_of_basis: 128
+  fc_neurons: [64, 64] 
+  use_atom_edge_attr: False
+  irreps_atom_edge_attr: '1x0e'
+  irreps_feature: '512x0e+256x1e'
+  irreps_head: '32x0e+16x1e'
+  num_heads: 8
+  irreps_pre_attn: '256x0e+128x1e'
+  rescale_degree: False
+  nonlinear_message: True
+  irreps_mlp_mid: '768x0e+384x1e'
+  norm_layer: 'layer'
+  alpha_drop: 0.2
+  proj_drop: 0.0
+  out_drop: 0.0
+  drop_path_rate: 0.05
+  otf_graph: True
+  use_pbc: True
+  max_neighbors: 500
+  
+  use_auxiliary_task: True
+  
+  
+optim:
+  batch_size: 16
+  eval_batch_size: 16
+  num_workers: 4
+  lr_initial: 0.0005
+  max_epochs: 40
+  optimizer: AdamW
+  optimizer_params:
+    weight_decay: 0.001
+  scheduler: LambdaLR
+  scheduler_params:
+    lambda_type: cosine
+    warmup_factor: 0.2
+    warmup_epochs: 2
+    lr_min_factor: 1.e-2
+    
+  auxiliary_task_weight: 15.0
+
+  use_interpolate_init_relaxed_pos: True
