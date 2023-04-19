@@ -3,7 +3,7 @@
 
 - We use Anaconda to install required packages:
     ```bash
-        conda env create -f env/env_equfiformer.yml
+        conda env create -f env/env_equiformer.yml
     ```
     This will create a new environment called `equiformer`.
 
