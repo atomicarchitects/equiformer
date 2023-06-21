@@ -1,7 +1,7 @@
 # Equiformer: Equivariant Graph Attention Transformer for 3D Atomistic Graphs
 
 
-**[Paper](https://arxiv.org/abs/2206.11990)** | **[OpenReview](https://openreview.net/forum?id=KwmPfARgOTD)**
+**[Paper](https://arxiv.org/abs/2206.11990)** | **[OpenReview](https://openreview.net/forum?id=KwmPfARgOTD)** | **[Poster](docs/equiformer_poster.pdf)** | **[Slides](docs/equiformer_slides.pdf)**
 
 
 This repository contains the official PyTorch implementation of the work "Equiformer: Equivariant Graph Attention Transformer for 3D Atomistic Graphs" (ICLR 2023 Spotlight).
