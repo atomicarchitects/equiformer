@@ -1,0 +1,41 @@
+model:
+  name: equiformer_md17_dens
+
+  irreps_in:                  '64x0e'
+  irreps_equivariant_inputs:  '1x0e+1x1e+1x2e'          # for encoding forces during denoising positions
+  irreps_node_embedding:      '128x0e+64x1e+32x2e'
+  num_layers:                 6
+  irreps_node_attr:           '1x0e' 
+  irreps_sh:                  '1x0e+1x1e+1x2e'
+  
+  max_radius:                 5.0
+  number_of_basis:            32
+  basis_type:                 'exp' 
+  fc_neurons:                 [64, 64]
+
+  irreps_feature:             '512x0e+256x1e+128x2e'    # increase by 4 times      
+  irreps_head:                '32x0e+16x1e+8x2e' 
+  num_heads:                  4 
+  irreps_pre_attn:            '128x0e+64x1e+32x2e'
+  rescale_degree:             False
+  nonlinear_message:          True
+  irreps_mlp_mid:             '384x0e+192x1e+96x2e'
+  norm_layer:                 'layer'
+        
+  alpha_drop:                 0.0 
+  proj_drop:                  0.0 
+  out_drop:                   0.0
+  drop_path_rate:             0.0
+
+  use_force_encoding:         True
+  
+  #mean:                       None 
+  #std:                        None 
+  #scale:                      None 
+  #atomref:                    None
+
+  #use_denoising_energy_block:     True
+  #denoising_rbf_type:             'gaussian' 
+  #denoising_rbf_number_of_basis:  128
+  #rbf_merge_channels:             128
+  #use_gradient_pred:              False

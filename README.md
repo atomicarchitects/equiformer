@@ -6,6 +6,11 @@
 
 This repository contains the official PyTorch implementation of the work "Equiformer: Equivariant Graph Attention Transformer for 3D Atomistic Graphs" (ICLR 2023 Spotlight).
 
+Additionally, in our subsequent [work](https://arxiv.org/abs/2403.09549), we find that we can generalize self-supervised learning similar to BERT, which we call **DeNS** (**De**noising **N**on-Equilibrium **S**tructures), to 3D atomistic systems to improve the performance of Equiformer on MD17 dataset.
+We provide the implementation of training Equiformer with DeNS on MD17 below.
+Please refer to the [paper](https://arxiv.org/abs/2403.09549) and the [code](https://github.com/atomicarchitects/DeNS) for further details.
+
+
 
 <p align="center">
 	<img src="fig/equiformer.png" alt="photo not available" width="80%" height="80%">
@@ -91,6 +96,15 @@ For example, we can train Equiformer for the molecule of `aspirin` by running:
 
 2. Training logs of Equiformer with $L_{max} = 2$ and $L_{max} = 3$ can be found [here](https://www.dropbox.com/sh/yriizguj1m7t891/AACh395HiqCC0G7Lv4YURlyra?dl=0) ($L_{max} = 2$) and [here](https://www.dropbox.com/sh/1xrpzd1op0kwcpf/AABFYmgq0ZIprDE82RAY7oPSa?dl=0) ($L_{max} = 3$). Note that the units of energy and force are kcal mol $^{-1}$ and kcal mol $^{-1}$ Å $^{-1}$ and that we report energy and force in units of meV and meV Å $^{-1}$ in the paper. 
 
+3. We provide the scripts of training Equiformer with **DeNS** (**De**noising **N**on-Equilibrium **S**tructures) under [`scripts/train/md17/equiformer_dens`](scripts/train/md17/equiformer_dens).
+For example, we train Equiformer with DeNS for the molecule of `aspirin` by running:
+    ```bash
+        sh scripts/train/md17/equiformer_dens/se_l2/target@aspirin.sh    # L_max = 2
+        sh scripts/train/md17/equiformer_dens/se_l3/target@aspirin.sh    # L_max = 3
+    ```    
+
+4. The logs of training Equiformer with $L_{max} = 2$ and $L_{max} = 3$ with DeNS can be found [here](https://www.dropbox.com/scl/fo/5zdtct6an40dhvlirgl7b/AEHcheg7pLoNy7QvGbkJZ0k?rlkey=nlkyel9njusjhe9vpisnezmf7&st=12cjzhpy&dl=0) ($L_{max} = 2$) and [here](https://www.dropbox.com/scl/fo/53ctmrx3uqxlj4mcbj5oz/AKNU-WipNnPWBKIyAhB4VZk?rlkey=r7gzv1mic79ea1mif5oy0pww9&st=4tla8k1g&dl=0) ($L_{max} = 3$). Note that the units of energy and force are kcal mol $^{-1}$ and kcal mol $^{-1}$ Å $^{-1}$ and that we report energy and force in units of meV and meV Å $^{-1}$ in the paper. 
+
 
 ### OC20
 
@@ -134,6 +148,7 @@ We have different files and models for QM9, MD17 and OC20.
 ### MD17
 
 1. [`main_md17.py`](main_md17.py) is the code for training and evaluation on MD17 dataset.
+2. [`main_md17_dens.py](main_md17_dens.py) extends `main_md17.py` so that we can train with DeNS.
 
 
 ### OC20
@@ -165,6 +180,17 @@ If you use our code or method in your work, please consider citing the following
     booktitle={International Conference on Learning Representations},
     year={2023},
     url={https://openreview.net/forum?id=KwmPfARgOTD}
+}
+```
+
+If DeNS is helpful to your work, please consider citing the following as well:
+```bibtex
+@article{
+    DeNS,
+    title={Generalizing Denoising to Non-Equilibrium Structures Improves Equivariant Force Fields}, 
+    author={Yi-Lun Liao and Tess Smidt and Muhammed Shuaibi* and Abhishek Das*},
+    journal={arXiv preprint arXiv:2403.09549},
+    year={2024}
 }
 ```
 
