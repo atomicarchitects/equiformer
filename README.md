@@ -148,7 +148,7 @@ We have different files and models for QM9, MD17 and OC20.
 ### MD17
 
 1. [`main_md17.py`](main_md17.py) is the code for training and evaluation on MD17 dataset.
-2. [`main_md17_dens.py](main_md17_dens.py) extends `main_md17.py` so that we can train with DeNS.
+2. [`main_md17_dens.py`](main_md17_dens.py) extends `main_md17.py` so that we can train Equiformer with DeNS.
 
 
 ### OC20
