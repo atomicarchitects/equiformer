@@ -80,13 +80,14 @@ class EquivariantLayerNormV2(nn.Module):
 
         assert normalization in ['norm', 'component'], "normalization needs to be 'norm' or 'component'"
         self.normalization = normalization
-
+        self.irreps_dict = {}
+        for mul, ir in self.irreps:
+            self.irreps_dict[ir.l] = (ir.l, ir.p, ir.dim, mul)
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.irreps}, eps={self.eps})"
 
 
-    @torch.cuda.amp.autocast(enabled=False)
     def forward(self, node_input, **kwargs):
         # batch, *size, dim = node_input.shape  # TODO: deal with batch
         # node_input = node_input.reshape(batch, -1, dim)  # [batch, sample, stacked features]
@@ -99,8 +100,8 @@ class EquivariantLayerNormV2(nn.Module):
         iw = 0
         ib = 0
 
-        for mul, ir in self.irreps:  # mul is the multiplicity (number of copies) of some irrep type (ir)
-            d = ir.dim
+        for l, p, d, mul in self.irreps_dict.values():  # mul is the multiplicity (number of copies) of some irrep type (ir)
+            # d = ir.dim
             #field = node_input[:, ix: ix + mul * d]  # [batch * sample, mul * repr]
             field = node_input.narrow(1, ix, mul*d)
             ix += mul * d
@@ -109,7 +110,7 @@ class EquivariantLayerNormV2(nn.Module):
             field = field.reshape(-1, mul, d)
 
             # For scalars first compute and subtract the mean
-            if ir.l == 0 and ir.p == 1:
+            if l == 0 and p == 1:
                 # Compute the mean
                 field_mean = torch.mean(field, dim=1, keepdim=True) # [batch, mul, 1]]
                 # Subtract the mean
@@ -135,7 +136,7 @@ class EquivariantLayerNormV2(nn.Module):
             
             field = field * field_norm.reshape(-1, mul, 1)  # [batch * sample, mul, repr]
             
-            if self.affine and d == 1 and ir.p == 1:  # scalars
+            if self.affine and d == 1 and p == 1:  # scalars
                 bias = self.affine_bias[ib: ib + mul]  # [batch, mul]
                 ib += mul
                 field += bias.reshape(mul, 1)  # [batch * sample, mul, repr]

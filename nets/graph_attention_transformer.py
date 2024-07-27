@@ -923,7 +923,7 @@ def graph_attention_transformer_nonlinear_l2(irreps_in, radius, num_basis=128,
     atomref=None, task_mean=None, task_std=None, **kwargs):
     model = GraphAttentionTransformer(
         irreps_in=irreps_in,
-        irreps_node_embedding='128x0e+64x1e+32x2e', num_layers=6,
+        irreps_node_embedding='128x0e+64x1e+32x2e', num_layers=2,
         irreps_node_attr='1x0e', irreps_sh='1x0e+1x1e+1x2e',
         max_radius=radius,
         number_of_basis=num_basis, fc_neurons=[64, 64], 

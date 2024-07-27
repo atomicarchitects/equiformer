@@ -123,16 +123,18 @@ class Gate(torch.nn.Module):
         irreps_gated = self.mul.irreps_out
 
         self._irreps_out = irreps_scalars + irreps_gated
-        
+        self.irreps_scalars_dim = self.irreps_scalars.dim
+        self.irreps_gates_dim = self.irreps_gates.dim
+        self.irreps_in_dim = self.irreps_in.dim
 
     def __repr__(self):
         return f"{self.__class__.__name__} ({self.irreps_in} -> {self.irreps_out})"
 
 
     def forward(self, features):
-        scalars_dim = self.irreps_scalars.dim
-        gates_dim = self.irreps_gates.dim
-        input_dim = self.irreps_in.dim
+        scalars_dim = self.irreps_scalars_dim
+        gates_dim = self.irreps_gates_dim
+        input_dim = self.irreps_in_dim
         scalars = features.narrow(-1, 0, scalars_dim)
         gates = features.narrow(-1, scalars_dim, gates_dim)
         gated = features.narrow(-1, (scalars_dim + gates_dim), 
