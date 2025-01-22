@@ -47,7 +47,7 @@ The dataset of MD17 will be automatically downloaded when running training.
 
 ### OC20
 
-The dataset for different tasks can be downloaded by following instructions in their [GitHub repository](https://github.com/Open-Catalyst-Project/ocp/blob/main/DATASET.md#download-and-preprocess-the-dataset).
+The dataset for different tasks can be downloaded by following instructions in their [GitHub repository](https://github.com/FAIR-Chem/fairchem/blob/b5a197fc3c79a9a5a787aabaa02979be53d296b7/DATASET.md#initial-structure-to-relaxed-structure-is2rs-and-initial-structure-to-relaxed-energy-is2re-tasks), which was previously this [link](https://github.com/Open-Catalyst-Project/ocp/blob/main/DATASET.md#download-and-preprocess-the-dataset).
 After downloading, place the datasets under `datasets/oc20/` by using `ln -s`.
 Take `is2re` as an example:
 
