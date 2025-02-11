@@ -17,10 +17,10 @@
 
 - After setting up the environment, clone OC20 repository and install `ocpmodels`:
     ```bash
-        git clone https://github.com/Open-Catalyst-Project/ocp
+        git clone https://github.com/FAIR-Chem/fairchem.git
         cd ocp
-        git checkout b5a197f
+        git checkout d2aaaeb67687785a99f869b4568e59cbbfab7acb
         pip install -e .
     ```
     The version of `ocpmodels` used here is `0.0.3`. 
-    The correpsonding version of GitHub repository is [here](https://github.com/Open-Catalyst-Project/ocp/tree/b5a197fc3c79a9a5a787aabaa02979be53d296b7).
+    The correpsonding version of GitHub repository is [here](https://github.com/FAIR-Chem/fairchem/tree/d2aaaeb67687785a99f869b4568e59cbbfab7acb).
